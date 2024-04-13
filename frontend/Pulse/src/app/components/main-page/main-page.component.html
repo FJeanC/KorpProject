@@ -1,0 +1,5 @@
+<app-navbar></app-navbar>
+<app-new-post></app-new-post>
+<div *ngFor="let post of posts">
+  <app-feed-post [post]="post"></app-feed-post>
+</div>

@@ -1,0 +1,16 @@
+.profile-container {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  .profile-info {
+    margin-top: 20px;
+  }
+  
+  .profile-info p {
+    margin: 10px 0;
+  }
+  
