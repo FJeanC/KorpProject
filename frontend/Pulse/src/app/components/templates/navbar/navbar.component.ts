@@ -13,9 +13,22 @@ import { Router } from '@angular/router';
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent {
-  
-  constructor(private router: Router) { }
-  navigateToPerfil(): void {
-    this.router.navigate(['/perfil']);
+  isProfilePage: boolean;
+
+  constructor(private router: Router) { 
+    this.isProfilePage = this.router.url.includes('/perfil');
+  }
+
+  navigateToDestination(): void {
+    if (this.isProfilePage) {
+      this.router.navigate(['/feed']);
+    } else {
+      this.router.navigate(['/perfil']);
+    }
+  }
+
+  logout(): void {
+    localStorage.clear()
+    this.router.navigate(['/login'])
   }
 }

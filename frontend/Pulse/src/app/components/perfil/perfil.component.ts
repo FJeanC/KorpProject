@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { NavbarComponent } from '../templates/navbar/navbar.component';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [],
+  imports: [NavbarComponent],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
