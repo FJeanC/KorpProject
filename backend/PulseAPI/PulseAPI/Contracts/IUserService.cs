@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PulseAPI.DTO;
 using PulseAPI.Models;
 
 namespace PulseAPI.Contracts
@@ -10,6 +11,6 @@ namespace PulseAPI.Contracts
         Task<ActionResult<User>> CreateUser(User user);
         Task<ActionResult<User>> UpdateUser(User user);
         Task<ActionResult<bool>> DeleteUser(int id);
-        Task<ActionResult<User>> LoginUser(string email, string password);
+        Task<ActionResult<User>> LoginUser(UserLoginDTO userLoginDTO);
     }
 }

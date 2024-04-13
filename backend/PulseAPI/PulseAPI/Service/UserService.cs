@@ -3,7 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using PulseAPI.Contracts;
 using PulseAPI.Data;
+using PulseAPI.DTO;
 using PulseAPI.Models;
+using System.ComponentModel.DataAnnotations;
 
 namespace PulseAPI.Service
 {
@@ -35,8 +37,22 @@ namespace PulseAPI.Service
 
         public async Task<ActionResult<User>> CreateUser(User user)
         {
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
+            try
+            {
+                if (string.IsNullOrWhiteSpace(user.Name) ||
+                string.IsNullOrWhiteSpace(user.Email))
+                {
+                    throw new ValidationException("Name and Email are required fields.");
+                }
+                _context.Users.Add(user);
+                await _context.SaveChangesAsync();
+            }
+            catch (ValidationException)
+            {
+                throw;
+            } 
+            // mudar isso
+
             return user;
             //return new CreatedAtActionResult(nameof(GetUser), "User", new { id = user.Id }, user);
         }
@@ -67,15 +83,10 @@ namespace PulseAPI.Service
             return true;
         }
 
-        public async Task<ActionResult<User>> LoginUser(string email, string password)
+        public async Task<ActionResult<User>> LoginUser(UserLoginDTO userLoginDTO)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == email && u.Password == password);
-
-            if (user == null)
-            {
-                return new NotFoundResult();
-            }
-            return user;
+            var authService = new AuthService(_context);
+            return await authService.AuthenticateUser(userLoginDTO);
         }
     }
 }

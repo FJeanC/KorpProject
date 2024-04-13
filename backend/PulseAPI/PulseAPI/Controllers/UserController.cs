@@ -53,7 +53,7 @@ namespace PulseAPI.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<User>> LoginUser([FromBody] UserLoginDTO userLoginDTO)
         {
-            return await _userService.LoginUser(userLoginDTO.Email, userLoginDTO.Password);
+            return await _userService.LoginUser(userLoginDTO);
         }
 
     }
