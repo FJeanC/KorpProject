@@ -1,6 +1,7 @@
 <mat-toolbar>
     <button mat-icon-button class="example-icon" aria-label="Logout icon-button" (click)="navigateToDestination()">
-      <mat-icon>home</mat-icon>
+      <mat-icon *ngIf="!isProfilePage">account_circle</mat-icon>
+      <mat-icon *ngIf="isProfilePage">home</mat-icon>
     </button>
     <span>Pulse</span>
     <span class="example-spacer"></span>
