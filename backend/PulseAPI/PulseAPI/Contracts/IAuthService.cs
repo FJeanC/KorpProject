@@ -7,8 +7,8 @@ namespace PulseAPI.Contracts
     public interface IAuthService
     {
         Task<ActionResult<User>> AuthenticateUser(UserLoginDTO userLoginDTO);
-        bool ValidateEmail(string email);
-        bool ValidatePassword(string password);
+        bool EmailIsValid(string email);
+        bool PasswordIsValid(string password);
     }
     
 }

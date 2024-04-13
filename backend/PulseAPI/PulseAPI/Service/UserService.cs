@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using PulseAPI.Contracts;
@@ -44,6 +45,11 @@ namespace PulseAPI.Service
                 {
                     throw new ValidationException("Name and Email are required fields.");
                 }
+                var authService = new AuthService(_context);
+                if (!(authService.EmailIsValid(user.Email) && authService.PasswordIsValid(user.Password)))
+                {
+                    throw new ArgumentException("Invalid email or password.");
+                }
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
             }
@@ -51,10 +57,12 @@ namespace PulseAPI.Service
             {
                 throw;
             } 
-            // mudar isso
+            catch (Exception ex)
+            {
+                return new BadRequestResult(); 
+            }
 
             return user;
-            //return new CreatedAtActionResult(nameof(GetUser), "User", new { id = user.Id }, user);
         }
 
         public async Task<ActionResult<User>> UpdateUser(User user)
