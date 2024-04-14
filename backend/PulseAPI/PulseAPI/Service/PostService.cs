@@ -23,7 +23,7 @@ namespace PulseAPI.Service
                 return new BadRequestResult();
             }
 
-            if (postDTO.Content.Length >= PostConstants.MinPostLength || postDTO.Content.Length <= PostConstants.MaxPostLength)
+            if (postDTO.Content.Length < PostConstants.MinPostLength || postDTO.Content.Length > PostConstants.MaxPostLength)
             {
                 return new BadRequestResult();
             }

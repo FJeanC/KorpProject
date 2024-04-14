@@ -16,12 +16,18 @@ import { PostService } from '../../../services/posts/post.service';
   styleUrl: './feed-post.component.css'
 })
 export class FeedPostComponent {
+  userId!: number;
   @Input() post!: Post;
 
   constructor(private postService : PostService) { }
 
   likePost(post: Post): void {
-    this.postService.likePost(post.id, post.user.id!).subscribe({
+    const userInfo = localStorage.getItem('userInfo');
+    if(userInfo) {
+      const { name, email, id } = JSON.parse(userInfo);
+      this.userId = id;
+    }
+    this.postService.likePost(post.id, this.userId ?? post.user.id ).subscribe({
       next: (number : number) => {
         post.likes = number;
       },
