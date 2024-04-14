@@ -10,7 +10,7 @@ namespace PulseAPI.Contracts
         Task<ActionResult<Post>> GetPostById(int id);
         Task<ActionResult<Post>> CreatePost(PostDTO postDTO);
         Task<ActionResult<Post>> UpdatePost(Post post);
-        Task<ActionResult<bool>> DeletePost(int id);
+        Task<ActionResult<bool>> DeletePost(int id, int userId);
         Task<ActionResult<List<Post>>> GetPostsByUser(int userId);
         Task<ActionResult<int>> LikePost(int postId, int userId);
     }

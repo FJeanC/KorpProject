@@ -41,7 +41,7 @@ namespace PulseAPI.Service
             return new CreatedAtActionResult(nameof(GetPostById), "Post", new { id = post.Id }, post);
         }
 
-        public async Task<ActionResult<bool>> DeletePost(int id)
+        public async Task<ActionResult<bool>> DeletePost(int id, int userId)
         {
             var dbPost = await _context.Posts.FindAsync(id);
             if (dbPost == null)

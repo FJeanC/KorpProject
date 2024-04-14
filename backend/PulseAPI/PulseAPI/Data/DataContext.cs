@@ -27,7 +27,7 @@ namespace PulseAPI.Data
                 .HasOne(pl => pl.Post)
                 .WithMany()
                 .HasForeignKey(pl => pl.PostId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

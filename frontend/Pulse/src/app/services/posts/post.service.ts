@@ -27,4 +27,8 @@ export class PostService {
   public likePost(postId : number, userId : number) : Observable<number> {
     return this.http.post<number>(`${environment.apiUrl}/Post/like?postId=${postId}&userId=${userId}`, {}); // mudar para passar isso por body
   }
+
+  public deletePost(postId : number, userId : number): Observable<boolean>{
+    return this.http.delete<boolean>(`${environment.apiUrl}/Post/${postId}?userId=${userId}`, {})  
+  }
 }

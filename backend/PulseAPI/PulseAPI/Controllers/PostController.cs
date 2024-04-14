@@ -35,9 +35,9 @@ namespace PulseAPI.Controllers
             return await _postService.UpdatePost(post);
         }
         [HttpDelete("{id}")]
-        public async Task<ActionResult<bool>> DeletePost(int id)
+        public async Task<ActionResult<bool>> DeletePost(int id, int userId)
         {
-            return await _postService.DeletePost(id);
+            return await _postService.DeletePost(id, userId);
         }
 
         [HttpGet("post/{id}")]
