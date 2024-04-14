@@ -56,5 +56,11 @@ namespace PulseAPI.Controllers
             return await _userService.LoginUser(userLoginDTO);
         }
 
+        [HttpPut("updateAboutMe")]
+        public async Task<ActionResult<User>> UpdateAboutMe([FromBody] AboutMeDTO aboutMe)
+        {
+            return await _userService.UpdateAboutMe(aboutMe);
+        }
+
     }
 }

@@ -98,5 +98,17 @@ namespace PulseAPI.Service
             var authService = new AuthService(_context);
             return await authService.AuthenticateUser(userLoginDTO);
         }
+
+        public async Task<ActionResult<User>> UpdateAboutMe(AboutMeDTO aboutMeDTO)
+        {
+            var dbUser = await _context.Users.FindAsync(aboutMeDTO.UserId);
+            if (dbUser == null)
+            {
+                return new BadRequestResult();
+            }
+            dbUser.AboutMe = aboutMeDTO.AboutMe;
+            await _context.SaveChangesAsync();
+            return dbUser;
+        }
     }
 }

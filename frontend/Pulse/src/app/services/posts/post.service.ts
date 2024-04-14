@@ -16,7 +16,6 @@ export class PostService {
   }
 
   public createPost(postDto: any) : Observable<Post> {
-    console.log(`${environment.apiUrl}/Post`, {postDto})
     return this.http.post<Post>(`${environment.apiUrl}/Post`, postDto);
   }
 
@@ -31,4 +30,9 @@ export class PostService {
   public deletePost(postId : number, userId : number): Observable<boolean>{
     return this.http.delete<boolean>(`${environment.apiUrl}/Post/${postId}?userId=${userId}`, {})  
   }
+
+  public updatePost(aboutMe : string) : Observable<Post> {
+    return this.http.put<Post>(`${environment.apiUrl}/Post`, aboutMe);
+  }
+  
 }

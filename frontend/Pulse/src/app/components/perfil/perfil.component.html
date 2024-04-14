@@ -5,11 +5,17 @@
     <div class="profile-info">
       <p><strong>Nome:</strong> {{ userName }}</p>
       <p><strong>Email:</strong> {{ userEmail }}</p>
-      <p><strong>Sobre mim:</strong> {{ aboutMe }}</p>
+      <div *ngIf="editingAboutMe">
+        <textarea id="aboutMe" [(ngModel)]="aboutMe" placeholder="Digite sobre você aqui..."></textarea>
+        <button (click)="saveAboutMeChanges()">Salvar</button> 
+      </div>
+      <div *ngIf="!editingAboutMe">
+        <p><strong>Sobre mim:</strong> {{ aboutMe }}</p>
+        <button (click)="startEditing()">Editar</button> 
+      </div>
     </div>
 </div>
 
 <div *ngFor="let post of posts">
   <app-feed-post [post]="post"></app-feed-post>
 </div>
-  

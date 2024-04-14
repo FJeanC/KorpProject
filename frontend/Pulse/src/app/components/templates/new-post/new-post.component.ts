@@ -1,19 +1,16 @@
 import {Component, Input } from '@angular/core';
-import {MatProgressBarModule} from '@angular/material/progress-bar';
 import {MatButtonModule} from '@angular/material/button';
 import {MatDividerModule} from '@angular/material/divider';
 import {MatCardModule} from '@angular/material/card';
-import { Post } from '../../../model/post';
 import { PostService } from '../../../services/posts/post.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { User } from '../../../model/user';
 
 
 @Component({
   selector: 'app-new-post',
   standalone: true,
-  imports: [CommonModule, MatCardModule, MatButtonModule, MatDividerModule,FormsModule ],
+  imports: [CommonModule, MatCardModule, MatButtonModule, MatDividerModule, FormsModule ],
   templateUrl: './new-post.component.html',
   styleUrl: './new-post.component.css'
 })

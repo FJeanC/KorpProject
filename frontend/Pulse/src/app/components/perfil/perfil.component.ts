@@ -1,20 +1,21 @@
 import { Component } from '@angular/core';
 import { UserService } from '../../services/user.service';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { NavbarComponent } from '../templates/navbar/navbar.component';
-import { MainPageComponent } from '../main-page/main-page.component';
 import { CommonModule } from '@angular/common';
 import { Post } from '../../model/post';
 import { PostService } from '../../services/posts/post.service';
 import { FeedPostComponent } from '../templates/feed-post/feed-post.component';
 import { AuthService } from '../../services/auth.service';
+import { MatFormField, MatLabel } from '@angular/material/form-field';
+import { FormsModule } from '@angular/forms';
+import { error } from 'console';
+import { AboutMeInfo } from '../../contracts/aboutMeInfo';
 
 @Component({
   selector: 'app-perfil',
   standalone: true,
-  imports: [NavbarComponent, CommonModule, FeedPostComponent],
+  imports: [NavbarComponent, CommonModule, FeedPostComponent, MatIconModule, MatFormField, MatLabel, FormsModule],
   templateUrl: './perfil.component.html',
   styleUrl: './perfil.component.css'
 })
@@ -24,6 +25,7 @@ export class PerfilComponent {
   aboutMe!: string;
   userId!: number;
   posts: Post[] = [];
+  editingAboutMe: boolean = false;
   
   constructor(private postService: PostService, private authService: AuthService, private userService: UserService) { }
   ngOnInit(): void {
@@ -44,5 +46,24 @@ export class PerfilComponent {
       },
       error: (error) => {}
     })   
+  }
+
+  startEditing() {
+    this.editingAboutMe = true; 
+  }
+
+  saveAboutMeChanges() {
+    const aboutMeInfo: AboutMeInfo = {
+      userId: this.userId , 
+      aboutMe: this.aboutMe
+    };
+    this.userService.updateUser(aboutMeInfo).subscribe({
+      next : (user) => {
+        this.aboutMe = user.aboutMe!
+      },
+      error: (error) => {
+        console.log(error)
+      }
+    })
   }
 }
