@@ -15,7 +15,7 @@ export class PostService {
     return this.http.get<Post[]>(`${environment.apiUrl}/Post`);
   }
 
-  public createPost(postDto: any) : Observable<Post> { // mudar esse any
+  public createPost(postDto: any) : Observable<Post> {
     console.log(`${environment.apiUrl}/Post`, {postDto})
     return this.http.post<Post>(`${environment.apiUrl}/Post`, postDto);
   }

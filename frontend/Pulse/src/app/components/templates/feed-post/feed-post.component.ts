@@ -27,7 +27,6 @@ export class FeedPostComponent {
   }
 
   onDeletePost(postId: number): void {
-    console.log('Cheguei no onDeletePost');
     const userId = this.userId;
     this.deletePost.emit({ postId, userId });
   }

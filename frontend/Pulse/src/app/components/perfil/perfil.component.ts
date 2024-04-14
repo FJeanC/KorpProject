@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import { Post } from '../../model/post';
 import { PostService } from '../../services/posts/post.service';
 import { FeedPostComponent } from '../templates/feed-post/feed-post.component';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-perfil',
@@ -20,23 +21,21 @@ import { FeedPostComponent } from '../templates/feed-post/feed-post.component';
 export class PerfilComponent {
   userName!: string;
   userEmail!: string;
+  aboutMe!: string;
   userId!: number;
   posts: Post[] = [];
   
-  constructor(private postService: PostService) { }
+  constructor(private postService: PostService, private authService: AuthService, private userService: UserService) { }
   ngOnInit(): void {
-    const userInfo = localStorage.getItem('userInfo');
-    console.log(userInfo)
-    if (userInfo) {
-      const { name, email, id } = JSON.parse(userInfo);
-      this.userName = name;
-      this.userEmail = email;
-      this.userId = id
-      console.log('LOG', this.userName, this.userEmail)
-    } else {
-      console.log('LOG error', this.userName, this.userEmail)
-      console.error('Dados do usuário não encontrados no localStorage.');
-    }
+    const userInfo = this.authService.getUserInfo();
+    this.userId = userInfo!.id;
+    this.userService.getUser(this.userId).subscribe({
+      next: (user) => {
+        this.userName = user.name;
+        this.userEmail = user.email;
+        this.aboutMe = user.aboutMe!;
+      }
+    })
 
     this.postService.getPostsByUser(this.userId).subscribe({
       next: (post) => {
@@ -44,7 +43,6 @@ export class PerfilComponent {
         console.log(post)
       },
       error: (error) => {}
-    }
-  )   
+    })   
   }
 }

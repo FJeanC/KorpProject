@@ -124,7 +124,7 @@ namespace PulseAPI.Service
             }
             else
             {
-                if (postLikeInfo == null) // refatorar
+                if (postLikeInfo == null)
                 {
                     var likeInfo = new PostLikeInfo
                     {
@@ -142,7 +142,7 @@ namespace PulseAPI.Service
             }
             await _context.SaveChangesAsync();
 
-            return new ActionResult<int>(post.Likes);
+            return post.Likes;
         }
     }
 }
