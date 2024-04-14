@@ -20,7 +20,7 @@ namespace PulseAPI.Service
             {
                 Content = postDTO.Content,
                 UserId = postDTO.UserId,
-                CreatedAt = DateTime.UtcNow,
+                CreatedAt = DateTime.UtcNow.ToLocalTime(),
             };
 
             _context.Posts.Add(post);
@@ -52,13 +52,13 @@ namespace PulseAPI.Service
 
         public async Task<ActionResult<List<Post>>> GetPosts()
         {
-            var posts = await _context.Posts.ToListAsync();
+            var posts = await _context.Posts.OrderByDescending(p => p.CreatedAt).ToListAsync();
             return await LoadUsers(posts);
         }
 
         public async Task<ActionResult<List<Post>>> GetPostsByUser(int userId)
         {
-            var posts = await _context.Posts.Where(p => p.UserId == userId).ToListAsync();
+            var posts = await _context.Posts.Where(p => p.UserId == userId).OrderByDescending(p => p.CreatedAt).ToListAsync();
             return await LoadUsers(posts);
         }
         private async Task<ActionResult<List<Post>>> LoadUsers(List<Post> posts)
