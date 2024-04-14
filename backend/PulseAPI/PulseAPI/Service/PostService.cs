@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Hosting;
+using PulseAPI.Constants;
 using PulseAPI.Contracts;
 using PulseAPI.Data;
 using PulseAPI.DTO;
@@ -17,11 +17,23 @@ namespace PulseAPI.Service
         }
         public async Task<ActionResult<Post>> CreatePost(PostDTO postDTO)
         {
+
+            if (postDTO.Content == null)
+            {
+                return new BadRequestResult();
+            }
+
+            if (postDTO.Content.Length >= PostConstants.MinPostLength || postDTO.Content.Length <= PostConstants.MaxPostLength)
+            {
+                return new BadRequestResult();
+            }
+
             Post post = new Post
             {
                 Content = postDTO.Content,
                 UserId = postDTO.UserId,
                 CreatedAt = DateTime.UtcNow.ToLocalTime(),
+                Likes = 0
             };
 
             _context.Posts.Add(post);

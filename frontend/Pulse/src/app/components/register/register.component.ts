@@ -36,7 +36,7 @@ export class RegisterComponent {
         if (error.status === 400) {
           this.errorMessage = 'Dados de usuário inválidos.';
         } else if (error.status === 409) {
-          this. errorMessage = 'Usuário já registrado.';
+          this.errorMessage = 'Usuário já registrado.';
         }
         else {
           this.errorMessage = "Ocorreu algum erro ao registrar o usuário."
