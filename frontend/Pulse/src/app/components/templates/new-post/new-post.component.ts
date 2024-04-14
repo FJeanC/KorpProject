@@ -18,17 +18,21 @@ import { User } from '../../../model/user';
   styleUrl: './new-post.component.css'
 })
 export class NewPostComponent {
-
+  userId!: number;
   newPostContent: string = "";
   constructor(private postService: PostService) { }
 
   postNewPost(): void {
     if (this.newPostContent.trim()) {
+      const userInfo = localStorage.getItem('userInfo');
+      if(userInfo) {
+        const { name, email, id } = JSON.parse(userInfo);
+        this.userId = id 
+      }
       const newPost = {
-        userId : 11,
+        userId : this.userId,
         content: this.newPostContent,
       }
-      console.log(newPost)
       // trocar pra next, error
       this.postService.createPost(newPost).subscribe(() => {
         this.newPostContent = '';

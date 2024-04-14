@@ -40,10 +40,16 @@ namespace PulseAPI.Controllers
             return await _postService.DeletePost(id);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("post/{id}")]
         public async Task<ActionResult<Post>> GetPostById(int id)
         {
             return await _postService.GetPostById(id);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<ActionResult<List<Post>>> GetPostByUser(int id)
+        {
+            return await _postService.GetPostsByUser(id);
         }
     }
 }

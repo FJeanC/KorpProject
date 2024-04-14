@@ -19,4 +19,8 @@ export class PostService {
     console.log(`${environment.apiUrl}/Post`, {postDto})
     return this.http.post<Post>(`${environment.apiUrl}/Post`, postDto);
   }
+
+  public getPostsByUser(userId : number) : Observable<Post[]> {
+    return this.http.get<Post[]>(`${environment.apiUrl}/Post/${userId}`);
+  }
 }

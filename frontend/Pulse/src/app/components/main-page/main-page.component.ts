@@ -17,11 +17,9 @@ import { NewPostComponent } from "../templates/new-post/new-post.component";
     imports: [CommonModule, NavbarComponent, FeedPostComponent, NewPostComponent]
 })
 export class MainPageComponent {
-  // localstorage, como usar
   posts: Post[] = [];
-  userName: string = "";
-
-  constructor(private postService: PostService, private userService: UserService) { 
+  
+  constructor(private postService: PostService) { 
   }
 
   ngOnInit(): void {
@@ -30,9 +28,7 @@ export class MainPageComponent {
           console.log(post)
           this.posts = post
         },
-        error: (error) => {
-         // console.error(error)
-        }
+        error: (error) => {}
       }
     )   
   }
