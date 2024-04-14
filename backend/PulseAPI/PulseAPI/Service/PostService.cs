@@ -53,25 +53,16 @@ namespace PulseAPI.Service
         public async Task<ActionResult<List<Post>>> GetPosts()
         {
             var posts = await _context.Posts.ToListAsync();
-            var postsWithUsers = new List<Post>();
-
-            foreach (var post in posts)
-            {
-                var user = await _context.Users.FindAsync(post.UserId);
-                if (user == null)
-                {
-                    return new NotFoundResult();
-                }
-                post.User = user;
-                postsWithUsers.Add(post);
-            }
-            return postsWithUsers;
+            return await LoadUsers(posts);
         }
 
         public async Task<ActionResult<List<Post>>> GetPostsByUser(int userId)
         {
-            // Repete muito código, refatorar
             var posts = await _context.Posts.Where(p => p.UserId == userId).ToListAsync();
+            return await LoadUsers(posts);
+        }
+        private async Task<ActionResult<List<Post>>> LoadUsers(List<Post> posts)
+        {
             var postsWithUsers = new List<Post>();
             foreach (var post in posts)
             {
