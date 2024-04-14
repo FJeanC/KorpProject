@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using PulseAPI.Contracts;
 using PulseAPI.Data;
 using PulseAPI.DTO;
@@ -88,6 +89,43 @@ namespace PulseAPI.Service
 
             await _context.SaveChangesAsync();
             return new OkObjectResult(await GetPosts());
+        }
+
+        public async Task<ActionResult> LikePost(int postId, int userId)
+        {
+            var post = await _context.Posts.FindAsync(postId);
+            var postLikeInfo = await _context.PostLikeInfo.FirstOrDefaultAsync(pl => pl.UserId == userId && pl.PostId == postId);
+
+            if (post == null)
+            {
+                return new BadRequestResult();
+            }
+
+            // se não remover o dado, tenho que tratar a possível inserção de dados duplicados, não posso inserir mesmo cara dnv
+            if (postLikeInfo != null && postLikeInfo.IsLiked)
+            {
+                post.Likes--;
+                postLikeInfo.IsLiked = false;// devo deixar false ou deletar o dado?
+                if (post.Likes <= 0 )
+                {
+                    post.Likes = 0;
+                }
+            }
+            else
+            {
+                var likeInfo = new PostLikeInfo
+                {
+                    UserId = userId,
+                    PostId = postId,
+                    IsLiked = true
+                };
+
+                _context.PostLikeInfo.Add(likeInfo);
+                post.Likes++;
+            }
+            await _context.SaveChangesAsync();
+
+            return new OkResult();
         }
     }
 }
