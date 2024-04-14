@@ -53,7 +53,7 @@ namespace PulseAPI.Controllers
         }
 
         [HttpPost("like")]
-        public async Task<ActionResult> LikePost(int postId, int userId)
+        public async Task<ActionResult<int>> LikePost(int postId, int userId)
         {
             return await _postService.LikePost(postId, userId);
         }

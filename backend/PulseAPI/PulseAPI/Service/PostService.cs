@@ -91,7 +91,7 @@ namespace PulseAPI.Service
             return new OkObjectResult(await GetPosts());
         }
 
-        public async Task<ActionResult> LikePost(int postId, int userId)
+        public async Task<ActionResult<int>> LikePost(int postId, int userId)
         {
             var post = await _context.Posts.FindAsync(postId);
             var postLikeInfo = await _context.PostLikeInfo.FirstOrDefaultAsync(pl => pl.UserId == userId && pl.PostId == postId);
@@ -101,11 +101,10 @@ namespace PulseAPI.Service
                 return new BadRequestResult();
             }
 
-            // se não remover o dado, tenho que tratar a possível inserção de dados duplicados, não posso inserir mesmo cara dnv
             if (postLikeInfo != null && postLikeInfo.IsLiked)
             {
                 post.Likes--;
-                postLikeInfo.IsLiked = false;// devo deixar false ou deletar o dado?
+                postLikeInfo.IsLiked = false;
                 if (post.Likes <= 0 )
                 {
                     post.Likes = 0;
@@ -113,19 +112,25 @@ namespace PulseAPI.Service
             }
             else
             {
-                var likeInfo = new PostLikeInfo
+                if (postLikeInfo == null) // refatorar
                 {
-                    UserId = userId,
-                    PostId = postId,
-                    IsLiked = true
-                };
-
-                _context.PostLikeInfo.Add(likeInfo);
+                    var likeInfo = new PostLikeInfo
+                    {
+                        UserId = userId,
+                        PostId = postId,
+                        IsLiked = true
+                    };
+                    _context.PostLikeInfo.Add(likeInfo);
+                }
+                else
+                {
+                    postLikeInfo.IsLiked = true;
+                }
                 post.Likes++;
             }
             await _context.SaveChangesAsync();
 
-            return new OkResult();
+            return new ActionResult<int>(post.Likes);
         }
     }
 }

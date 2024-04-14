@@ -23,4 +23,8 @@ export class PostService {
   public getPostsByUser(userId : number) : Observable<Post[]> {
     return this.http.get<Post[]>(`${environment.apiUrl}/Post/${userId}`);
   }
+
+  public likePost(postId : number, userId : number) : Observable<number> {
+    return this.http.post<number>(`${environment.apiUrl}/Post/like?postId=${postId}&userId=${userId}`, {}); // mudar para passar isso por body
+  }
 }

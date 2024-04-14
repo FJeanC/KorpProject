@@ -6,4 +6,5 @@ export class Post {
     content!: string;
     createdAt!: Date;
     user!: User;
+    likes!: number;
   }

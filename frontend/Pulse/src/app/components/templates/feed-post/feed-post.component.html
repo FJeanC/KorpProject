@@ -8,6 +8,9 @@
       <mat-divider></mat-divider>
     </mat-card-content>
     <mat-card-actions>
-      <button mat-button>LIKE</button>
+      <button mat-icon-button (click)="likePost(post)">
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+      <span>{{ post.likes }}</span>
     </mat-card-actions>
 </mat-card>
