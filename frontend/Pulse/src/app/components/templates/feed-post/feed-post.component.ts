@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDividerModule } from '@angular/material/divider';
@@ -21,8 +21,15 @@ export class FeedPostComponent {
   userId!: number;
   userInfo? : UserInfo | null;
   @Input() post!: Post;
+  @Output() deletePost  = new EventEmitter<{ postId: number, userId: number }>();
 
   constructor(private postService : PostService, private authService : AuthService) { 
+  }
+
+  onDeletePost(postId: number): void {
+    console.log('Cheguei no onDeletePost');
+    const userId = this.userId;
+    this.deletePost.emit({ postId, userId });
   }
 
   ngOnInit(): void {
@@ -37,17 +44,6 @@ export class FeedPostComponent {
       },
       error: (error) => {
         console.error('Erro ao curtir o post:', error);
-      }
-    });
-  }
-
-  deletePost(post: Post): void {
-    this.postService.deletePost(post.id, this.userId).subscribe({
-      next: (result) => {
-        console.log("Post foi deletado. Id: ", post.id, 'User: ', this.userId)
-      },
-      error: (error) => {
-        console.error('Erro ao deletar o post:', error);
       }
     });
   }

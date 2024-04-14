@@ -33,4 +33,17 @@ export class MainPageComponent {
     )   
   }
 
+  onDeletePost(event: { postId: number, userId: number }): void {
+    const { postId, userId } = event;
+    this.postService.deletePost(postId, userId).subscribe({
+      next: () => {
+        console.log("Post foi deletado. Id: ", postId, 'User: ', userId)
+        this.posts = this.posts.filter(post => post.id !== postId);
+      },
+      error: (error) => {
+        console.error('Erro ao deletar o post:', error);
+      }
+    });
+  }
+
 }
