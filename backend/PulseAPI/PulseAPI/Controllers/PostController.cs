@@ -34,7 +34,7 @@ namespace PulseAPI.Controllers
         {
             return await _postService.UpdatePost(post);
         }
-        [HttpDelete("{id}")]
+        [HttpDelete("{id}/{userId}")]
         public async Task<ActionResult<bool>> DeletePost(int id, int userId)
         {
             return await _postService.DeletePost(id, userId);
@@ -52,7 +52,7 @@ namespace PulseAPI.Controllers
             return await _postService.GetPostsByUser(id);
         }
 
-        [HttpPost("like")]
+        [HttpPost("like/{postId}/{userId}")]
         public async Task<ActionResult<int>> LikePost(int postId, int userId)
         {
             return await _postService.LikePost(postId, userId);
