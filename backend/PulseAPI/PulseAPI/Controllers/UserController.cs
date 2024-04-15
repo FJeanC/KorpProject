@@ -13,7 +13,7 @@ namespace PulseAPI.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        // falta tratar erros e exceções
+
         private readonly IUserService _userService;
         public UserController(IUserService context)
         {

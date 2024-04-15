@@ -3,6 +3,6 @@
     public class AboutMeDTO
     {
         public int UserId { get; set; }
-        public string AboutMe { get; set; } = String.Empty;
+        public string AboutMe { get; set; } = string.Empty;
     }
 }

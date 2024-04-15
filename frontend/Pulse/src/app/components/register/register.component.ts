@@ -36,7 +36,7 @@ export class RegisterComponent {
       },
       error: (error) => {
         this.user = { name: '', email: '', password: '' };
-        console.error('Erro ao registrar usuário:', error);
+       // console.error('Erro ao registrar usuário:', error);
         this.errorMessage = 'Ocorreu um erro ao registrar usuário.';
         if (error.status === 400) {
           this.errorMessage = 'Dados de usuário inválidos.';
@@ -46,6 +46,7 @@ export class RegisterComponent {
         else {
           this.errorMessage = "Ocorreu algum erro ao registrar o usuário."
         }
+        console.log(this.errorMessage)
       }
     });
   }

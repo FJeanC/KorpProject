@@ -8,13 +8,11 @@ import { UserInfo } from '../contracts/userInfo';
   providedIn: 'root'
 })
 export class AuthService {
-  loggedUserInfo!: UserInfo;
   constructor(private http: HttpClient) { }
 
   loginUser(email: string, password: string): Observable<any> {
     const url = `${environment.apiUrl}/User/login`;
     const body = { 'email' : email, 'password' : password };
-    console.log(url, body)
     return this.http.post<any>(url, body);
   }
 

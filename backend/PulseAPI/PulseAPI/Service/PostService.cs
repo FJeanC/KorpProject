@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using PulseAPI.Constants;
 using PulseAPI.Contracts;
 using PulseAPI.Data;
@@ -18,12 +19,9 @@ namespace PulseAPI.Service
         public async Task<ActionResult<Post>> CreatePost(PostDTO postDTO)
         {
 
-            if (postDTO.Content == null)
-            {
-                return new BadRequestResult();
-            }
-
-            if (postDTO.Content.Length < PostConstants.MinPostLength || postDTO.Content.Length > PostConstants.MaxPostLength)
+            if (string.IsNullOrEmpty(postDTO.Content) ||
+                postDTO.Content.Length < PostConstants.MinPostLength || 
+                postDTO.Content.Length > PostConstants.MaxPostLength)
             {
                 return new BadRequestResult();
             }
@@ -44,7 +42,7 @@ namespace PulseAPI.Service
         public async Task<ActionResult<bool>> DeletePost(int id, int userId)
         {
             var dbPost = await _context.Posts.FindAsync(id);
-            if (dbPost == null)
+            if (dbPost == null || dbPost.UserId != userId)
             {
                 return new BadRequestResult();
             }

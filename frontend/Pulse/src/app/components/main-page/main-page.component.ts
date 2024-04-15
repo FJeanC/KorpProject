@@ -1,10 +1,7 @@
 import { Component } from '@angular/core';
 import { Post } from '../../model/post';
 import { PostService } from '../../services/posts/post.service';
-import { FormsModule } from '@angular/forms';
 import {CommonModule} from '@angular/common';
-import { User } from '../../model/user';
-import { UserService } from '../../services/user.service';
 import { NavbarComponent } from "../templates/navbar/navbar.component";
 import { FeedPostComponent } from "../templates/feed-post/feed-post.component";
 import { NewPostComponent } from "../templates/new-post/new-post.component";
@@ -37,7 +34,6 @@ export class MainPageComponent {
     const { postId, userId } = event;
     this.postService.deletePost(postId, userId).subscribe({
       next: () => {
-        console.log("Post foi deletado. Id: ", postId, 'User: ', userId)
         this.posts = this.posts.filter(post => post.id !== postId);
       },
       error: (error) => {

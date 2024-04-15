@@ -9,7 +9,6 @@ import { FeedPostComponent } from '../templates/feed-post/feed-post.component';
 import { AuthService } from '../../services/auth.service';
 import { MatFormField, MatLabel } from '@angular/material/form-field';
 import { FormsModule } from '@angular/forms';
-import { error } from 'console';
 import { AboutMeInfo } from '../../contracts/aboutMeInfo';
 
 @Component({
@@ -44,7 +43,9 @@ export class PerfilComponent {
         this.posts = post
         console.log(post)
       },
-      error: (error) => {}
+      error: (error) => {
+        console.error(error)
+      }
     })   
   }
 
@@ -62,7 +63,7 @@ export class PerfilComponent {
         this.aboutMe = user.aboutMe!
       },
       error: (error) => {
-        console.log(error)
+        console.error(error)
       }
     })
   }

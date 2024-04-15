@@ -38,28 +38,26 @@ namespace PulseAPI.Service
 
         public async Task<ActionResult<User>> CreateUser(User user)
         {
-            // tratar o caso que o user já existe
-            // melhorar essa função
             try
             {
-                if (string.IsNullOrWhiteSpace(user.Name) ||
-                string.IsNullOrWhiteSpace(user.Email))
+                if (string.IsNullOrWhiteSpace(user.Name) || string.IsNullOrWhiteSpace(user.Email))
                 {
                     return new BadRequestResult();
                 }
                 var authService = new AuthService(_context);
-                if (!(authService.EmailIsValid(user.Email) && authService.PasswordIsValid(user.Password)))
+                if (!authService.EmailIsValid(user.Email) && !authService.PasswordIsValid(user.Password))
                 {
+                    return new BadRequestResult();
+                }
+                var userAlreadyExists = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
+                
+                if (userAlreadyExists != null) {
                     return new BadRequestResult();
                 }
                 _context.Users.Add(user);
                 await _context.SaveChangesAsync();
             }
-            catch (ValidationException)
-            {
-                return new BadRequestResult();
-            } 
-            catch (Exception ex)
+            catch (Exception)
             {
                 return new BadRequestResult(); 
             }

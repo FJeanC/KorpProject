@@ -27,14 +27,12 @@ export class LoginComponent {
   
     this.authService.loginUser(email, password).subscribe({
       next: (user) => {
-        console.log('Usuário autenticado com sucesso!');
-        console.log(user)
         localStorage.setItem('userInfo', JSON.stringify({email: user.email, id: user.id, name: user.name}))
         this.router.navigate(['/feed']);
       },
       error: (error) => {
-        // tratar exceções
         console.error('Erro ao autenticar usuário:', error);
+        alert('Credenciais inválidas. Por favor, verifique seu email e senha.');
       }
     });
   }
