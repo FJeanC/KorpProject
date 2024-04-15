@@ -49,8 +49,8 @@ namespace PulseAPI.Service
                 {
                     return new BadRequestResult();
                 }
+
                 var userAlreadyExists = await _context.Users.FirstOrDefaultAsync(u => u.Email == user.Email);
-                
                 if (userAlreadyExists != null) {
                     return new BadRequestResult();
                 }
@@ -65,16 +65,14 @@ namespace PulseAPI.Service
             return user;
         }
 
-        public async Task<ActionResult<User>> UpdateUser(User user)
+        public async Task<ActionResult<User>> UpdateUser(AboutMeDTO aboutMeDTO)
         {
-            var dbUser = await _context.Users.FindAsync(user.Id);
+            var dbUser = await _context.Users.FindAsync(aboutMeDTO.UserId);
             if (dbUser == null)
             {
                 return new BadRequestResult();
             }
-            dbUser.Name = user.Name;
-            dbUser.Email = user.Email;
-
+            dbUser.AboutMe = aboutMeDTO.AboutMe;
             await _context.SaveChangesAsync();
             return dbUser;
         }
@@ -95,18 +93,6 @@ namespace PulseAPI.Service
         {
             var authService = new AuthService(_context);
             return await authService.AuthenticateUser(userLoginDTO);
-        }
-
-        public async Task<ActionResult<User>> UpdateAboutMe(AboutMeDTO aboutMeDTO)
-        {
-            var dbUser = await _context.Users.FindAsync(aboutMeDTO.UserId);
-            if (dbUser == null)
-            {
-                return new BadRequestResult();
-            }
-            dbUser.AboutMe = aboutMeDTO.AboutMe;
-            await _context.SaveChangesAsync();
-            return dbUser;
         }
     }
 }

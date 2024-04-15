@@ -39,9 +39,9 @@ namespace PulseAPI.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult<User>> UpdateUser(User user)
+        public async Task<ActionResult<User>> UpdateUser([FromBody] AboutMeDTO aboutMe)
         {
-            return await _userService.UpdateUser(user);
+            return await _userService.UpdateUser(aboutMe);
         }
 
         [HttpDelete("{id}")]
@@ -55,12 +55,5 @@ namespace PulseAPI.Controllers
         {
             return await _userService.LoginUser(userLoginDTO);
         }
-
-        [HttpPut("updateAboutMe")]
-        public async Task<ActionResult<User>> UpdateAboutMe([FromBody] AboutMeDTO aboutMe)
-        {
-            return await _userService.UpdateAboutMe(aboutMe);
-        }
-
     }
 }

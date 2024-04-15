@@ -9,9 +9,8 @@ namespace PulseAPI.Contracts
         Task<ActionResult<List<User>>> GetUsers();
         Task<ActionResult<User>> GetUser(int id);
         Task<ActionResult<User>> CreateUser(User user);
-        Task<ActionResult<User>> UpdateUser(User user);
+        Task<ActionResult<User>> UpdateUser(AboutMeDTO aboutMeDTO);
         Task<ActionResult<bool>> DeleteUser(int id);
         Task<ActionResult<User>> LoginUser(UserLoginDTO userLoginDTO);
-        Task<ActionResult<User>> UpdateAboutMe(AboutMeDTO aboutMeDTO);
     }
 }

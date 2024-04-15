@@ -26,6 +26,6 @@ export class UserService {
 
   public updateUser(aboutMe: AboutMeInfo): Observable<User> {
     console.log(aboutMe)
-    return this.http.put<User>(`${environment.apiUrl}/${this.url}/updateAboutMe`, aboutMe);
+    return this.http.put<User>(`${environment.apiUrl}/${this.url}`, aboutMe);
   }
 }
