@@ -1,7 +1,7 @@
-import {Component, Input } from '@angular/core';
-import {MatButtonModule} from '@angular/material/button';
-import {MatDividerModule} from '@angular/material/divider';
-import {MatCardModule} from '@angular/material/card';
+import { Component } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatCardModule } from '@angular/material/card';
 import { PostService } from '../../../services/posts/post.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,17 +23,21 @@ export class NewPostComponent {
     if (this.newPostContent.trim()) {
       const userInfo = localStorage.getItem('userInfo');
       if(userInfo) {
-        const { name, email, id } = JSON.parse(userInfo);
+        const { id } = JSON.parse(userInfo);
         this.userId = id 
       }
       const newPost = {
         userId : this.userId,
         content: this.newPostContent,
       }
-      // trocar pra next, error
-      this.postService.createPost(newPost).subscribe(() => {
-        this.newPostContent = '';
-        console.log('Post feito com sucesso')
+      this.postService.createPost(newPost).subscribe({
+        next: () => {
+          this.newPostContent = '';
+          console.log('Post feito com sucesso')
+        },
+        error: () => {
+          alert('Dados do Post são inválido. Posts válidos tem entre 2 a 256 caracteres.')
+        }
       });
     }
   }

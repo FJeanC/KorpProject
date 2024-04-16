@@ -45,7 +45,6 @@ export class RegisterComponent {
         else {
           this.errorMessage = "Ocorreu algum erro ao registrar o usuário."
         }
-        console.log(this.errorMessage)
       }
     });
   }

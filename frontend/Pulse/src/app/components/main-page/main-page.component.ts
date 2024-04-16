@@ -37,9 +37,8 @@ export class MainPageComponent {
         this.posts = this.posts.filter(post => post.id !== postId);
       },
       error: (error) => {
-        console.error('Erro ao deletar o post:', error);
+        alert('Erro ao deletar o post:');
       }
     });
   }
-
 }
