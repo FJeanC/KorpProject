@@ -14,7 +14,6 @@ import { NgFor } from '@angular/common';
 })
 export class AppComponent {
   title = 'Pulse';
-  users: User[] = [];
 
-  constructor(private userService: UserService) {}
+  constructor() {}
 }

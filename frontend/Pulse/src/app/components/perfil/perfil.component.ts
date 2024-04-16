@@ -41,10 +41,9 @@ export class PerfilComponent {
     this.postService.getPostsByUser(this.userId).subscribe({
       next: (post) => {
         this.posts = post
-        console.log(post)
       },
-      error: (error) => {
-        console.error(error)
+      error: () => {
+        alert('Erro ao carregar posts do usuário:')
       }
     })   
   }
@@ -55,7 +54,7 @@ export class PerfilComponent {
 
   saveAboutMeChanges() {
     const aboutMeInfo: AboutMeInfo = {
-      userId: this.userId , 
+      userId: this.userId, 
       aboutMe: this.aboutMe
     };
     this.userService.updateUser(aboutMeInfo).subscribe({
@@ -63,8 +62,8 @@ export class PerfilComponent {
         this.aboutMe = user.aboutMe!
         this.editingAboutMe = false;
       },
-      error: (error) => {
-        console.error(error)
+      error: () => {
+        alert('Erro ao salvar alterações no about me:')
       }
     })
   }

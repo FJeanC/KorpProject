@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Post } from '../../model/post';
 import { PostService } from '../../services/posts/post.service';
-import {CommonModule} from '@angular/common';
+import { CommonModule } from '@angular/common';
 import { NavbarComponent } from "../templates/navbar/navbar.component";
 import { FeedPostComponent } from "../templates/feed-post/feed-post.component";
 import { NewPostComponent } from "../templates/new-post/new-post.component";

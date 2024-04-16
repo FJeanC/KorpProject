@@ -41,8 +41,8 @@ export class FeedPostComponent {
       next: (number : number) => {
         post.likes = number;
       },
-      error: (error) => {
-        console.error('Erro ao curtir o post:', error);
+      error: () => {
+        alert('Erro ao curtir o post:');
       }
     });
   }

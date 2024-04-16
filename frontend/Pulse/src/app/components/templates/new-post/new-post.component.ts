@@ -19,7 +19,7 @@ export class NewPostComponent {
   newPostContent: string = "";
   constructor(private postService: PostService) { }
 
-  postNewPost(): void {
+  createNewPost(): void {
     if (this.newPostContent.trim()) {
       const userInfo = localStorage.getItem('userInfo');
       if(userInfo) {
@@ -33,7 +33,6 @@ export class NewPostComponent {
       this.postService.createPost(newPost).subscribe({
         next: () => {
           this.newPostContent = '';
-          console.log('Post feito com sucesso')
         },
         error: () => {
           alert('Dados do Post são inválido. Posts válidos tem entre 2 a 256 caracteres.')

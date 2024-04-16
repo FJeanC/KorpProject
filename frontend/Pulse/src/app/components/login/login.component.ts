@@ -22,6 +22,11 @@ export class LoginComponent {
   constructor(private authService: AuthService, private router: Router) { }
 
   loginUser(): void {
+
+    if (!this.email || !this.password) {
+      alert('Por favor, preencha todos os campos.');
+      return;
+    }
     const email = this.email;
     const password = this.password;
   
@@ -31,8 +36,13 @@ export class LoginComponent {
         this.router.navigate(['/feed']);
       },
       error: (error) => {
-        console.error('Erro ao autenticar usuário:', error);
-        alert('Credenciais inválidas. Por favor, verifique seu email e senha.');
+        if (error.status === 401) {
+          alert('Credenciais inválidas. Por favor, verifique seu email e senha.');
+        } else {
+          alert('Ocorreu um erro ao tentar fazer login. Por favor, tente novamente mais tarde.');
+        }
+        this.email = ''
+        this.password = ''
       }
     });
   }

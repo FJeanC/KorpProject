@@ -8,31 +8,31 @@ import { environment } from '../../../environments/environment.development';
   providedIn: 'root'
 })
 export class PostService {
-
+  private apiRoute = "Post";
   constructor(private http: HttpClient)  { }
 
   public getPosts() : Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiUrl}/Post`);
+    return this.http.get<Post[]>(`${environment.apiUrl}/${this.apiRoute}`);
   }
 
   public createPost(postDto: any) : Observable<Post> {
-    return this.http.post<Post>(`${environment.apiUrl}/Post`, postDto);
+    return this.http.post<Post>(`${environment.apiUrl}/${this.apiRoute}`, postDto);
   }
 
   public getPostsByUser(userId : number) : Observable<Post[]> {
-    return this.http.get<Post[]>(`${environment.apiUrl}/Post/${userId}`);
+    return this.http.get<Post[]>(`${environment.apiUrl}/${this.apiRoute}/${userId}`);
   }
 
   public likePost(postId : number, userId : number) : Observable<number> {
-    return this.http.post<number>(`${environment.apiUrl}/Post/like/${postId}/${userId}`, {});
+    return this.http.post<number>(`${environment.apiUrl}/${this.apiRoute}/like/${postId}/${userId}`, {});
   }
 
   public deletePost(postId : number, userId : number): Observable<boolean>{
-    return this.http.delete<boolean>(`${environment.apiUrl}/Post/${postId}/${userId}`, {})  
+    return this.http.delete<boolean>(`${environment.apiUrl}/${this.apiRoute}/${postId}/${userId}`, {})  
   }
 
   public updatePost(aboutMe : string) : Observable<Post> {
-    return this.http.put<Post>(`${environment.apiUrl}/Post`, aboutMe);
+    return this.http.put<Post>(`${environment.apiUrl}/${this.apiRoute}`, aboutMe);
   }
   
 }
