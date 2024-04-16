@@ -40,7 +40,8 @@ namespace PulseAPI.Service
         {
             try
             {
-                if (string.IsNullOrWhiteSpace(user.Name) || string.IsNullOrWhiteSpace(user.Email))
+                if (string.IsNullOrWhiteSpace(user.Name) || string.IsNullOrWhiteSpace(user.Email) ||
+                    string.IsNullOrWhiteSpace(user.Password))
                 {
                     return new BadRequestResult();
                 }

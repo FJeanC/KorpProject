@@ -16,6 +16,7 @@
     </mat-form-field>
 
     <button mat-raised-button type="submit" (click)="registerUser()">Registrar</button>
+    <button mat-raised-button color="primary" (click)="goToLogin()">Logar</button>
     <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
   </div>
 </div>
