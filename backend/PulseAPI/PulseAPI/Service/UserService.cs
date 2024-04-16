@@ -46,7 +46,7 @@ namespace PulseAPI.Service
                     return new BadRequestResult();
                 }
                 var authService = new AuthService(_context);
-                if (!authService.EmailIsValid(user.Email) && !authService.PasswordIsValid(user.Password))
+                if (!authService.EmailIsValid(user.Email) || !authService.PasswordIsValid(user.Password))
                 {
                     return new BadRequestResult();
                 }

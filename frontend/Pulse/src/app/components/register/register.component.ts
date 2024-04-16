@@ -29,24 +29,44 @@ export class RegisterComponent {
   constructor(private userService: UserService, private router: Router) { }
 
   registerUser(): void {
-    this.userService.createUser(this.user).subscribe({
-      next: () => {
-        console.log('Usuário registrado com sucesso!');
-        this.router.navigate(['/login']);
-      },
-      error: (error) => {
-        this.user = { name: '', email: '', password: '' };
-        this.errorMessage = 'Ocorreu um erro ao registrar usuário.';
-        if (error.status === 400) {
-          this.errorMessage = 'Dados de usuário inválidos.';
-        } else if (error.status === 409) {
-          this.errorMessage = 'Usuário já registrado.';
+    if (this.validadeUserData()) {
+      this.userService.createUser(this.user).subscribe({
+        next: () => {
+          console.log('Usuário registrado com sucesso!');
+          this.router.navigate(['/login']);
+        },
+        error: (error) => {
+          this.user = { name: '', email: '', password: '' };
+          this.errorMessage = 'Ocorreu um erro ao registrar usuário.';
+          if (error.status === 400) {
+            this.errorMessage = 'Dados de usuário inválidos.';
+          } else if (error.status === 409) {
+            this.errorMessage = 'Usuário já registrado.';
+          }
+          else {
+            this.errorMessage = "Ocorreu algum erro ao registrar o usuário."
+          }
         }
-        else {
-          this.errorMessage = "Ocorreu algum erro ao registrar o usuário."
-        }
-      }
-    });
+      }); 
+    }
+    this.user = { name: '', email: '', password: '' };
+    this.errorMessage = 'Usuário ou Senha inválidos.';
+  }
+
+  validadeUserData() : boolean {
+    if (!this.user.email.trim() || !this.user.password.trim()){
+      return false;
+    }
+
+    if (this.user.email.length < 4) {
+      return false;
+    }
+
+    if (this.user.password.length < 8 && this.user.password.length > 16){
+      return false;
+    }
+
+    return true;
   }
 
   goToLogin() : void {
