@@ -25,7 +25,9 @@ export class MainPageComponent {
           console.log(post)
           this.posts = post
         },
-        error: (error) => {}
+        error: () => {
+          alert('Erro ao buscar os post. Problema com o servidor.');
+        }
       }
     )   
   }
@@ -36,7 +38,7 @@ export class MainPageComponent {
       next: () => {
         this.posts = this.posts.filter(post => post.id !== postId);
       },
-      error: (error) => {
+      error: () => {
         alert('Erro ao deletar o post:');
       }
     });

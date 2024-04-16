@@ -61,6 +61,7 @@ export class PerfilComponent {
     this.userService.updateUser(aboutMeInfo).subscribe({
       next : (user) => {
         this.aboutMe = user.aboutMe!
+        this.editingAboutMe = false;
       },
       error: (error) => {
         console.error(error)

@@ -1,19 +1,21 @@
-<mat-card>
-    <mat-card-header>
-      <mat-card-title>{{ post.user.name }}</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p> {{ post.content }}</p>
-      <p> {{ post.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
-    <mat-divider></mat-divider>
-    </mat-card-content>
-    <ng-container *ngIf="post.userId === userId">
-      <button mat-button color="warn" (click)="onDeletePost(post.id)">Excluir</button>
-    </ng-container>
-    <mat-card-actions>
-      <button mat-icon-button (click)="likePost(post)">
-        <mat-icon>thumb_up</mat-icon>
-      </button>
-      <span>{{ post.likes }}</span>
-    </mat-card-actions>
-</mat-card>
+<div class="container">
+  <mat-card class="custom-card">
+      <mat-card-header>
+        <mat-card-title>{{ post.user.name }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p> {{ post.content }}</p>
+        <p> Criado em: {{ post.createdAt | date: 'dd/MM/yyyy HH:mm' }}</p>
+      <mat-divider></mat-divider>
+      </mat-card-content>
+      <ng-container *ngIf="post.userId === userId">
+        <button mat-button color="warn" (click)="onDeletePost(post.id)">Excluir</button>
+      </ng-container>
+      <mat-card-actions>
+        <button mat-icon-button (click)="likePost(post)">
+          <mat-icon>thumb_up</mat-icon>
+        </button>
+        <span>{{ post.likes }}</span>
+      </mat-card-actions>
+  </mat-card>
+</div>
